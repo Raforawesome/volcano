@@ -1,3 +1,4 @@
+#![feature(try_blocks)]
 mod app;
 mod fs;
 
