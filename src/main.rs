@@ -1,5 +1,6 @@
 mod app;
+mod fs;
 
 fn main() {
-    println!("Hello, world!");
+	dioxus_web::launch(app::app);
 }
