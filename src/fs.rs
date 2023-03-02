@@ -16,20 +16,22 @@ fn or_create_dir() {
 }
 
 // Currently this just supports first level notes (no directories)
-pub unsafe fn get_note_names() -> Result<Vec<String>, std::io::Error> {
-	or_create_dir();
-    let names: Vec<String> = fs::read_dir(NOTES_DIR)?
-		.filter_map(Result::ok)
-		.filter_map(|obj| {
-			if !obj.path().is_dir() { 
-				let name: String = unch_os_to_str(obj.file_name());
-				if name.ends_with(".md") { Some(name) } else { None }
-			} else { 
-				None 
-			}
-		})
-		.collect();
-	Ok(names)
+pub fn get_note_names() -> Result<Vec<String>, std::io::Error> {
+	unsafe {
+		or_create_dir();
+		let names: Vec<String> = fs::read_dir(NOTES_DIR)?
+			.filter_map(Result::ok)
+			.filter_map(|obj| {
+				if !obj.path().is_dir() { 
+					let name: String = unch_os_to_str(obj.file_name());
+					if name.ends_with(".md") { Some(name) } else { None }
+				} else { 
+					None 
+				}
+			})
+			.collect();
+		Ok(names)
+	}
 }
 
 pub fn get_note_from_name(name: &str) -> Result<String, std::io::Error> {
