@@ -1,34 +1,30 @@
+#![allow(dead_code)]
 use std::{ffi::OsString, fs, path::PathBuf, io::Read};
 
-const NOTES_DIR: &'static str = "./notes/";
+const NOTES_DIR: &str = "./notes/";
 
 fn os_to_str(s: OsString) -> Option<String> {
-    s.to_str().and_then(|s| Some(s.to_string()))
+    s.to_str().map(|s| s.to_string())
 }
 
 unsafe fn unch_os_to_str(s: OsString) -> String {
     s.to_str().unwrap().to_string()
 }
 
-fn or_create_dir() {
+fn or_create_dir() -> Result<(), std::io::Error> {
 	let path: PathBuf = PathBuf::from(NOTES_DIR);
-	let _ = fs::create_dir(&path);
+	fs::create_dir(path)
 }
 
 // Currently this just supports first level notes (no directories)
 pub fn get_note_names() -> Result<Vec<String>, std::io::Error> {
 	unsafe {
-		or_create_dir();
+		or_create_dir()?;
 		let names: Vec<String> = fs::read_dir(NOTES_DIR)?
 			.filter_map(Result::ok)
-			.filter_map(|obj| {
-				if !obj.path().is_dir() { 
-					let name: String = unch_os_to_str(obj.file_name());
-					if name.ends_with(".md") { Some(name) } else { None }
-				} else { 
-					None 
-				}
-			})
+			.filter(|obj| !obj.path().is_dir())
+			.map(|obj| unch_os_to_str(obj.file_name()))
+			.filter(|s| s.ends_with(".md"))
 			.collect();
 		Ok(names)
 	}

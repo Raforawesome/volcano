@@ -4,3 +4,6 @@
 .vscode/
 .idea/
 .fleet/
+webui/target/
+webui/dist/
+server/target/
