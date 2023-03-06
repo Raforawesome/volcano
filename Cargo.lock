@@ -1619,16 +1619,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 
 [[package]]
-name = "volcano"
-version = "0.1.0"
-dependencies = [
- "dioxus 0.3.2",
- "dioxus-katex",
- "dioxus-web",
- "rsass",
-]
-
-[[package]]
 name = "waker-fn"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1733,6 +1723,16 @@ checksum = "e33b99f4b23ba3eec1a53ac264e35a755f00e966e0065077d6027c0f575b0b97"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "webui"
+version = "0.1.0"
+dependencies = [
+ "dioxus 0.3.2",
+ "dioxus-katex",
+ "dioxus-web",
+ "rsass",
 ]
 
 [[package]]
