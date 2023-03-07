@@ -10,6 +10,7 @@
 //! display ($$expr$$) modes.
 
 mod parse;
+pub use parse::{LatexType, ListType, MdToken, Span, tokenize_markdown};
 
 #[cfg(test)]
 mod tests {
@@ -17,5 +18,7 @@ mod tests {
 
     #[test]
     fn it_works() {
+		let md: String = std::fs::read_to_string("md.txt").expect("Failed to find markdown file!");
+		dbg!(parse::tokenize_markdown(&md));
     }
 }
