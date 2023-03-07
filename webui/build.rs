@@ -13,7 +13,7 @@ fn main() {
 		.for_each(|obj| {
 			let css: String = fs::read_to_string(obj.path()).unwrap();
 
-			let mut scss: String;
+			let scss: String;
 			unsafe {
 				scss = String::from_utf8_unchecked(
 					rsass::compile_scss(css.as_bytes(), 
