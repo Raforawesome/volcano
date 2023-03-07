@@ -26,7 +26,7 @@ fn main() {
 			}
 
 			fs::write(CSS_DIR.to_owned() + 
-				&obj.file_name().to_str().unwrap().replace(".scss", ".css"), &scss).unwrap();
+				&obj.file_name().to_str().unwrap().replace(".scss", ".css"), scss).unwrap();
 			println!("written to {}", obj.file_name().to_str().unwrap().replace(".scss", ".css"));
 		});
 }
