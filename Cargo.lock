@@ -1737,6 +1737,7 @@ dependencies = [
  "dioxus-katex",
  "dioxus-web",
  "rsass",
+ "volcano_parser",
 ]
 
 [[package]]
