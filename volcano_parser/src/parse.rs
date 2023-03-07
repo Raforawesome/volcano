@@ -36,5 +36,19 @@ pub enum ListType {
 }
 
 pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
-    todo!()
+    let mut buffer: Vec<MdToken> = vec![];
+    let mut char_pos: usize = 0;
+    for line in md.lines() {
+        if line.trim() == "" {
+            continue;
+        }
+        if line.starts_with("# ") {
+            buffer.push(MdToken {
+                ty: TokenType::H1,
+                span: Span(char_pos + 2, char_pos + line.len()),
+            });
+        }
+        char_pos += line.len();
+    }
+    buffer
 }

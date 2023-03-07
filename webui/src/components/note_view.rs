@@ -16,9 +16,7 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
         }
 
         tokens.iter()
-        .filter(|t| {
-            (&contents[t.span.0..t.span.1]).trim() != ""
-        })
+        // .filter(|t| (&contents[t.span.0..t.span.1]).trim() != "")
         .map(|t| {
             match t.ty {
                 TokenType::H1 => {
