@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-struct Span(usize, usize);
+pub struct Span(usize, usize);
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum MdToken {
