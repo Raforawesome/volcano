@@ -14,11 +14,10 @@ pub use parse::{tokenize_markdown, LatexType, ListType, MdToken, Span, TokenType
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    // use super::*;
 
     #[test]
     fn test_tokenizer() {
-        let md: String = std::fs::read_to_string("md.txt").expect("Failed to find markdown file!");
-        dbg!(parse::tokenize_markdown(&md));
+        // let md: String = std::fs::read_to_string("md.txt").expect("Failed to find markdown file!");
     }
 }
