@@ -12,7 +12,7 @@ pub enum TokenType {
     H5,
     Bold,
     Italic,
-    Latex(LatexType, Span),
+    Latex(LatexType),
     List(ListType, Vec<Span>),
     Invalid,
 }
