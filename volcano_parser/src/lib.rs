@@ -10,7 +10,7 @@
 //! display ($$expr$$) modes.
 
 mod parse;
-pub use parse::{tokenize_markdown, LatexType, ListType, MdToken, Span, TokenType};
+pub use parse::{tokenize_markdown, LatexType, ListType, MdToken, Span, TokenType, TextType};
 
 #[cfg(test)]
 mod tests {
