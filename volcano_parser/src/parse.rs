@@ -40,6 +40,7 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
     let mut char_pos: usize = 0;
     for line in md.lines() {
         if line.trim() == "" {
+			char_pos += 1;
             continue;
         }
         if line.starts_with("# ") {
@@ -47,8 +48,38 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
                 ty: TokenType::H1,
                 span: Span(char_pos + 2, char_pos + line.len()),
             });
-        }
-        char_pos += line.len();
+        } else if line.starts_with("## ") {
+            buffer.push(MdToken {
+                ty: TokenType::H2,
+                span: Span(char_pos + 3, char_pos + line.len()),
+            });
+		} else if line.starts_with("### ") {
+			buffer.push(MdToken {
+				ty: TokenType::H3,
+				span: Span(char_pos + 4, char_pos + line.len()),
+			});
+		} else if line.starts_with("#### ") {
+			buffer.push(MdToken {
+				ty: TokenType::H4,
+				span: Span(char_pos + 5, char_pos + line.len()),
+			});
+		} else if line.starts_with("##### ") {
+			buffer.push(MdToken {
+				ty: TokenType::H5,
+				span: Span(char_pos + 6, char_pos + line.len()),
+			});
+		} else if line.starts_with("**") && line.ends_with("**") {
+			buffer.push(MdToken {
+				ty: TokenType::Bold,
+				span: Span(char_pos + 2, char_pos + line.len() - 2),
+			});
+		} else if line.starts_with('*') && line.ends_with('*') {
+			buffer.push(MdToken {
+				ty: TokenType::Italic,
+				span: Span(char_pos + 1, char_pos + line.len() - 1),
+			});
+		}
+        char_pos += line.len() + 1;
     }
     buffer
 }
