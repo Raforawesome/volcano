@@ -52,6 +52,9 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
 						i { "{sub}" }
 					)
 				}
+				TokenType::Newline => {
+					rsx!( br {} )
+				}
                 _ => rsx!(
                     b { "Invalid token!" }
                 )

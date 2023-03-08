@@ -12,7 +12,7 @@ pub enum TokenType {
     H5,
     Bold,
     Italic,
-	Plain(Span),
+	Plain,
 	Newline,
     Latex(LatexType),
     List(ListType, Vec<Span>),
@@ -37,14 +37,64 @@ pub enum ListType {
     Unord,
 }
 
+
+#[derive(Debug, Clone, PartialEq, Default)]
+struct DebounceCounter {
+	d1: bool,
+	d2: bool,
+}
+
+impl DebounceCounter {
+	pub fn new() -> Self {
+		Self {
+			d1: false,
+			d2: false,
+		}
+	}
+
+	pub fn reset(&mut self) {
+		self.d1 = false;
+		self.d2 = false;
+	}
+
+	pub fn blank_line(&mut self) {
+		if !self.d1 {
+			self.d1 = true;
+		} else if self.d1 && !self.d2 {
+			self.d2 = true;
+		}
+	}
+	
+	pub fn both(&mut self) -> bool {
+		if self.d1 && !self.d2 {
+			self.d2 = true;
+			true
+		} else {
+			false
+		}
+	}
+}
+
+
 pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
     let mut buffer: Vec<MdToken> = vec![];
     let mut char_pos: usize = 0;
+	let mut blank_counter = DebounceCounter::new();
+
     for line in md.lines() {
         if line.trim() == "" {
 			char_pos += 1;
+			blank_counter.blank_line();
+			if blank_counter.both() {
+				buffer.push(MdToken {
+					ty: TokenType::Newline, 
+					span: Span::default(),
+				});
+			}
             continue;
-        }
+        } else {
+			blank_counter.reset();
+		}
         if line.starts_with("# ") {
             buffer.push(MdToken {
                 ty: TokenType::H1,
@@ -83,5 +133,6 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
 		}
         char_pos += line.len() + 1;
     }
+
     buffer
 }
