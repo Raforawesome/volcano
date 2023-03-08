@@ -31,6 +31,36 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
                         h2 { "{sub}" }
                     )
                 }
+				TokenType::H3 => {
+					let sub: &'a str = &contents[t.span.0..t.span.1];
+					rsx!(
+						h3 { "{sub}" }
+					)
+				}
+				TokenType::H4 => {
+					let sub: &'a str = &contents[t.span.0..t.span.1];
+					rsx!(
+						h4 { "{sub}" }
+					)
+				}
+				TokenType::H5 => {
+					let sub: &'a str = &contents[t.span.0..t.span.1];
+					rsx!(
+						h5 { "{sub}" }
+					)
+				}
+				TokenType::Bold => {
+					let sub: &'a str = &contents[t.span.0..t.span.1];
+					rsx!(
+						b { "{sub}" }
+					)
+				}
+				TokenType::Italic => {
+					let sub: &'a str = &contents[t.span.0..t.span.1];
+					rsx!(
+						i { "{sub}" }
+					)
+				}
                 _ => rsx!(
                     b { "Invalid token!" }
                 )
