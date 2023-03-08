@@ -12,13 +12,13 @@ Volcano is a complete set of software to run a markdown server, including a serv
 ## Goals/Features
 Volcano's parser is incredibly minimalistic. While I aim to support every feature of GFM in the future, currently the parser is very bare-bones and only supports what I need for my notes. However, it *does* support LaTeX rendering (through KaTeX), as the main inspiration behind this project was a lack of LaTeX support from other open source Markdown servers.
 
-*\* = Planned in the short term*
+*\* = Partially working*
 | Feature | Supported |
 |-------- | --------- |
-| Bold    | No*       |
-| Italic  | No*       |
-| LaTeX   | No*       |
-| Headers | No*       |
+| Bold    | Yes*      |
+| Italic  | Yes*      |
+| LaTeX   | No        |
+| Headers | Yes       |
 | Lists   | No        |
 | Code    | No        |
 | Inline Code | No*   |
