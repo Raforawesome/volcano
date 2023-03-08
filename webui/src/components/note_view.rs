@@ -7,14 +7,6 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
     let tokens = volcano_parser::tokenize_markdown(contents);
 
     cx.render(rsx!(
-        p {
-            "Running a "
-            b {
-                "bold"
-            }
-            " test"
-        }
-
         tokens.iter()
         // .filter(|t| (&contents[t.span.0..t.span.1]).trim() != "")
         .map(|t| {
