@@ -12,7 +12,8 @@ pub enum TokenType {
     H5,
     Bold,
     Italic,
-    Plain,
+	Plain,
+    Inline(Vec<TextToken>),
     Newline,
     Latex(LatexType),
     List(ListType, Vec<Span>),
@@ -20,8 +21,21 @@ pub enum TokenType {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+pub enum TextType {
+    Bold,
+    Italic,
+	Plain,
+}
+
+#[derive(Clone, Debug, PartialEq)]
 pub struct MdToken {
     pub ty: TokenType,
+    pub span: Span,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct TextToken {
+    pub ty: TextType,
     pub span: Span,
 }
 
@@ -128,7 +142,30 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
                 ty: TokenType::Italic,
                 span: Span(char_pos + 1, char_pos + line.len() - 1),
             });
-        }
+        } else {
+			let mut char_pos: usize = 0;
+			let mut buffer2: Vec<TextToken> = vec![];
+			for s in line.split(' ') {
+				if s.starts_with("**") && s.ends_with("**") {
+					buffer2.push(TextToken {
+						ty: TextType::Bold,
+						span: Span(char_pos + 2, char_pos + s.len() - 2),
+					});
+				} else if s.starts_with('*') && s.ends_with('*') {
+					buffer2.push(TextToken {
+						ty: TextType::Italic,
+						span: Span(char_pos + 1, char_pos + s.len() - 1),
+					});
+				} else {
+					buffer2.push(TextToken {
+						ty: TextType::Plain,
+						span: Span(char_pos, char_pos + s.len())
+					});
+				}
+				char_pos += s.len();
+			}
+			buffer.push(MdToken { ty: TokenType::Inline(buffer2), span: Span::default() });
+		}
         char_pos += line.len() + 1;
     }
 
