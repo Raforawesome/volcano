@@ -143,7 +143,6 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
                 span: Span(char_pos + 1, char_pos + line.len() - 1),
             });
         } else {
-			let mut char_pos: usize = 0;
 			let mut buffer2: Vec<TextToken> = vec![];
 			for s in line.split(' ') {
 				if s.starts_with("**") && s.ends_with("**") {
@@ -162,9 +161,10 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
 						span: Span(char_pos, char_pos + s.len())
 					});
 				}
-				char_pos += s.len();
+				char_pos += s.len() + 1;
 			}
 			buffer.push(MdToken { ty: TokenType::Inline(buffer2), span: Span::default() });
+			continue;
 		}
         char_pos += line.len() + 1;
     }
