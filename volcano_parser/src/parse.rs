@@ -20,7 +20,7 @@ pub enum TokenType {
     Invalid,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum TextType {
     Bold,
     Italic,
@@ -33,25 +33,25 @@ pub struct MdToken {
     pub span: Span,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct TextToken {
     pub ty: TextType,
     pub span: Span,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum LatexType {
     Inline,
     Display,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum ListType {
     Ord,
     Unord,
 }
 
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Copy, Clone, PartialEq, Default)]
 struct DebounceCounter {
     d1: bool,
     d2: bool,
