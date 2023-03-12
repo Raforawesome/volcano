@@ -53,7 +53,6 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
                 )
             }
 			TokenType::Inline(tokens) => {
-				info!("Found inline token");
 				rsx!(
 					p {
 						tokens.iter().map(|t| {
