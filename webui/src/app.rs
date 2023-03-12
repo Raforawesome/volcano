@@ -8,11 +8,16 @@ const TEST_FILE: &str = r#"
 #### Header 4
 ##### Header 5
 
+double newline test
+no newline test
+
 **bold**
 Inline **bold** text
 
 *italic*
 Inline *italic* test
+
+Inline **bold** and *italic* test
 "#;
 
 pub fn app(cx: Scope) -> Element {
