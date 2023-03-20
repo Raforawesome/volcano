@@ -2,29 +2,23 @@ use crate::components::note_view::NoteView;
 use dioxus::prelude::*;
 
 const TEST_FILE: &str = r#"
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
+# Welcome!
+## To Volcano.
+### A fully featured markdown renderer,
+#### made in
+##### Dioxus
 
-double newline test
-no newline test
 
-**bold**
-Inline **bold** text
+**Supporting bold,**
+**italic,**
+Inline **bold** and *italic* text,
 
-*italic*
-Inline *italic* test
-
-Inline **bold** and *italic* test
-
-KaTeX display test:
+LaTeX in display mode,
 $$\frac{1}{2}$$
 
-KaTeX inline in a $\frac{1}{2}$ sentence test
+and LaTeX in $\frac{1}{2}$ inline mode.
 
-Complex KaTeX test:
+All features of LaTeX are supported:
 $$f'(x)=\lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$$
 "#;
 
