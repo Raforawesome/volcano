@@ -15,7 +15,7 @@ pub enum TokenType {
 	Plain,
     Inline(Vec<TextToken>),
     Newline,
-    Latex(LatexType),
+    Latex,
     List(ListType, Vec<Span>),
     Invalid,
 }
@@ -25,6 +25,7 @@ pub enum TextType {
     Bold,
     Italic,
 	Plain,
+	Latex,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -142,7 +143,12 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
                 ty: TokenType::Italic,
                 span: Span(char_pos + 1, char_pos + line.len() - 1),
             });
-        } else {
+        } else if line.starts_with("$$") && line.ends_with("$$") {
+            buffer.push(MdToken {
+                ty: TokenType::Latex,
+                span: Span(char_pos + 2, char_pos + line.len() - 2),
+            });
+		} else {
 			let mut buffer2: Vec<TextToken> = vec![];
 			for s in line.split(' ') {
 				if s.starts_with("**") && s.ends_with("**") {
@@ -153,6 +159,11 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
 				} else if s.starts_with('*') && s.ends_with('*') {
 					buffer2.push(TextToken {
 						ty: TextType::Italic,
+						span: Span(char_pos + 1, char_pos + s.len() - 1),
+					});
+				} else if s.starts_with('$') && s.ends_with('$') {
+					buffer2.push(TextToken {
+						ty: TextType::Latex,
 						span: Span(char_pos + 1, char_pos + s.len() - 1),
 					});
 				} else {
