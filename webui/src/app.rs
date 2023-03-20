@@ -18,11 +18,27 @@ Inline **bold** text
 Inline *italic* test
 
 Inline **bold** and *italic* test
+
+KaTeX display test:
+$$\frac{1}{2}$$
+
+KaTeX inline in a $\frac{1}{2}$ sentence test
+
+Complex KaTeX test:
+$$f'(x)=\lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$$
 "#;
 
 pub fn app(cx: Scope) -> Element {
     cx.render(rsx!(
         style { include_str!("./css/index.css") }
-        NoteView { contents: TEST_FILE }
+		div {
+			class: "sidebar",
+			button {
+				"note 1"
+			}
+		}
+        NoteView {
+			contents: TEST_FILE
+		}
     ))
 }
