@@ -8,3 +8,4 @@ webui/target/
 webui/dist/
 server/target/
 webui/src/css/*.css
+server/notes/
