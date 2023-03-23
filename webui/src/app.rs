@@ -1,12 +1,12 @@
-use crate::components::note_view::NoteView;
+use crate::{components::note_view::NoteView, get_notes};
 use dioxus::prelude::*;
 
 const TEST_FILE: &str = r#"
 # Welcome!
 ## To Volcano.
 ### A fully featured markdown renderer,
-#### made in
-##### Dioxus
+#### created purely in
+##### Rust
 
 
 **Supporting bold,**
@@ -23,16 +23,25 @@ $$f'(x)=\lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$$
 "#;
 
 pub fn app(cx: Scope) -> Element {
+	let note_names: Vec<&str> = get_notes::get_note_list();
+	let note_raw = use_state(cx, || TEST_FILE.to_string());
+
     cx.render(rsx!(
         style { include_str!("./css/index.css") }
 		div {
 			class: "sidebar",
-			button {
-				"note 1"
-			}
+			note_names.clone().into_iter().map(|s| rsx!(
+				button {
+					class: "notebutton",
+					onclick: move |_| {
+						note_raw.set(crate::get_notes::get_note_content(s));
+					},
+					"{s}"
+				}
+			))
 		}
         NoteView {
-			contents: TEST_FILE
+			contents: "{note_raw}"
 		}
     ))
 }
