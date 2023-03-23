@@ -15,10 +15,10 @@ Volcano's parser is incredibly minimalistic. While I aim to support every featur
 *\* = Partially working*
 | Feature | Supported |
 |-------- | --------- |
-| Bold    | Yes*      |
-| Italic  | Yes*      |
-| LaTeX   | No        |
+| Bold    | Yes       |
+| Italic  | Yes       |
+| LaTeX   | Yes       |
 | Headers | Yes       |
 | Lists   | No        |
 | Code    | No        |
-| Inline Code | No*   |
+| Inline Code | No    |
