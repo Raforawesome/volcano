@@ -1,8 +1,7 @@
 use dioxus::prelude::*;
-use dioxus_web::use_eval;
 #[allow(unused)]
 use log::{error, info};
-use volcano_parser::{TextType, TokenType, LatexType};
+use volcano_parser::{TextType, TokenType};
 
 #[inline_props]
 #[allow(non_snake_case)]
@@ -56,10 +55,9 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
                         )
                     }
 					TokenType::Latex => {
-						let html: String;
 						let substr: &str = &contents[t.span.0..t.span.1];
 						let opts = katex::Opts::builder().display_mode(true).build().unwrap();
-						html = katex::render_with_opts(&substr.replace('$', ""), &opts).unwrap();
+						let html: String = katex::render_with_opts(&substr.replace('$', ""), opts).unwrap();
 						rsx!(
 							p {
 								dangerous_inner_html: "{html}"
@@ -91,10 +89,9 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
                                             )
                                         }
 										TextType::Latex => {
-											let html: String;
 											let substr: &str = &contents[t.span.0..t.span.1];
 											let opts = katex::Opts::builder().display_mode(false).build().unwrap();
-											html = katex::render_with_opts(&substr.replace('$', ""), &opts).unwrap();
+											let html: String = katex::render_with_opts(&substr.replace('$', ""), opts).unwrap();
 											rsx!(
 												span {
 													dangerous_inner_html: "{html}"
@@ -116,17 +113,16 @@ pub fn NoteView<'a>(cx: Scope, contents: &'a str) -> Element {
     ))
 }
 
-
-					// TokenType::Latex(latex_type) => {
-					// 	let s: String;
-					// 	if *latex_type == LatexType::Display {
-					// 		if let Value(st) = 
-					// 		scripts(&format!("katex.render({})", &contents[t.span.0..t.span.1])).get().unwrap()
-					// 		{}
-					// 	}
-					// 	rsx!(
-					// 		p {
-					// 			dangerous_inner_html: "{s}"
-					// 		}
-					// 	)
-					// }
+// TokenType::Latex(latex_type) => {
+// 	let s: String;
+// 	if *latex_type == LatexType::Display {
+// 		if let Value(st) =
+// 		scripts(&format!("katex.render({})", &contents[t.span.0..t.span.1])).get().unwrap()
+// 		{}
+// 	}
+// 	rsx!(
+// 		p {
+// 			dangerous_inner_html: "{s}"
+// 		}
+// 	)
+// }
