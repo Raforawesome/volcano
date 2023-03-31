@@ -1,22 +1,24 @@
-// This crate should eventually fetch a list of 
+// This module should eventually fetch a list of
 // notes from the server, but for now it'll just return a dummy value.
+
+#[cfg(target_family = "windows")]
+use reqwest;
+#[cfg(target_family = "unix")]
+use reqwest;
+#[cfg(target_family = "wasm")]
+use reqwest_wasm as reqwest;
 
 use std::collections::HashMap;
 
-pub fn get_note_list() -> Vec<&'static str> {
-	vec!["Note 1", "Note 2", "Note 3"]
-}
-
 pub fn get_note_content(title: &str) -> String {
-	if title == "Note 1" {
-		FILE1.into()
-	} else if title == "Note 2" {
-		FILE2.into()
-	} else {
-		FILE3.into()
-	}
+    if title == "Note 1" {
+        FILE1.into()
+    } else if title == "Note 2" {
+        FILE2.into()
+    } else {
+        FILE3.into()
+    }
 }
-
 
 const FILE1: &str = r#"
 # Test Note 1
@@ -52,7 +54,7 @@ $$= \infty$$
 "#;
 
 pub fn get_test_notes() -> HashMap<String, String> {
-	let mut map: HashMap<String, String> = HashMap::new();
-	let _ = map.insert("Note 1".into(), "v".into());
-	map
+    let mut map: HashMap<String, String> = HashMap::new();
+    let _ = map.insert("Note 1".into(), "v".into());
+    map
 }
