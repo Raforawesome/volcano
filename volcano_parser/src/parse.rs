@@ -12,7 +12,7 @@ pub enum TokenType {
     H5,
     Bold,
     Italic,
-	Plain,
+    Plain,
     Inline(Vec<TextToken>),
     Newline,
     Latex,
@@ -24,8 +24,8 @@ pub enum TokenType {
 pub enum TextType {
     Bold,
     Italic,
-	Plain,
-	Latex,
+    Plain,
+    Latex,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -148,35 +148,38 @@ pub fn tokenize_markdown(md: &str) -> Vec<MdToken> {
                 ty: TokenType::Latex,
                 span: Span(char_pos + 2, char_pos + line.len() - 2),
             });
-		} else {
-			let mut buffer2: Vec<TextToken> = vec![];
-			for s in line.split(' ') {
-				if s.starts_with("**") && s.ends_with("**") {
-					buffer2.push(TextToken {
-						ty: TextType::Bold,
-						span: Span(char_pos + 2, char_pos + s.len() - 2),
-					});
-				} else if s.starts_with('*') && s.ends_with('*') {
-					buffer2.push(TextToken {
-						ty: TextType::Italic,
-						span: Span(char_pos + 1, char_pos + s.len() - 1),
-					});
-				} else if s.starts_with('$') && s.ends_with('$') {
-					buffer2.push(TextToken {
-						ty: TextType::Latex,
-						span: Span(char_pos + 1, char_pos + s.len() - 1),
-					});
-				} else {
-					buffer2.push(TextToken {
-						ty: TextType::Plain,
-						span: Span(char_pos, char_pos + s.len())
-					});
-				}
-				char_pos += s.len() + 1;
-			}
-			buffer.push(MdToken { ty: TokenType::Inline(buffer2), span: Span::default() });
-			continue;
-		}
+        } else {
+            let mut buffer2: Vec<TextToken> = vec![];
+            for s in line.split(' ') {
+                if s.starts_with("**") && s.ends_with("**") {
+                    buffer2.push(TextToken {
+                        ty: TextType::Bold,
+                        span: Span(char_pos + 2, char_pos + s.len() - 2),
+                    });
+                } else if s.starts_with('*') && s.ends_with('*') {
+                    buffer2.push(TextToken {
+                        ty: TextType::Italic,
+                        span: Span(char_pos + 1, char_pos + s.len() - 1),
+                    });
+                } else if s.starts_with('$') && s.ends_with('$') {
+                    buffer2.push(TextToken {
+                        ty: TextType::Latex,
+                        span: Span(char_pos + 1, char_pos + s.len() - 1),
+                    });
+                } else {
+                    buffer2.push(TextToken {
+                        ty: TextType::Plain,
+                        span: Span(char_pos, char_pos + s.len()),
+                    });
+                }
+                char_pos += s.len() + 1;
+            }
+            buffer.push(MdToken {
+                ty: TokenType::Inline(buffer2),
+                span: Span::default(),
+            });
+            continue;
+        }
         char_pos += line.len() + 1;
     }
 
