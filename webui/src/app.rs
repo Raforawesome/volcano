@@ -51,7 +51,7 @@ pub fn app(cx: Scope) -> Element {
                         }
                     )))
                 },
-                None => {rsx!(p { "Loading notes..." })}
+                None => {rsx!(strong { class: "load-text", "Loading notes..." })}
             }
         }
         NoteView { contents: "{note_raw}" }
