@@ -25,7 +25,7 @@ $$f'(x)=\lim_{\Delta x \to 0} \frac{f(x+\Delta x)-f(x)}{\Delta x}$$
 "#;
 
 pub fn app(cx: Scope) -> Element {
-    let note_raw = use_state(cx, || TEST_FILE.to_string());
+    let note_raw = use_future(cx, (), async move |_| "".into());
     let note_names = use_future(cx, (), |_| async move {
         reqwest::get("http://127.0.0.1:7186/get_names")
             .await
@@ -54,6 +54,10 @@ pub fn app(cx: Scope) -> Element {
                 None => {rsx!(strong { class: "load-text", "Loading notes..." })}
             }
         }
-        NoteView { contents: "{note_raw}" }
+        NoteView { contents: TEST_FILE }
+        NoteView { contents: match note_raw.value() {
+            Some(v) => { &v }
+            None => { "Loading note..." }
+        }}
     ))
 }
