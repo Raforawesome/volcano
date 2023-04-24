@@ -17,8 +17,9 @@ async fn main() {
     }
 
     let cors: CorsLayer = CorsLayer::new()
-        .allow_methods(vec![Method::GET])
-        .allow_origin(Any);
+        .allow_methods(Any)
+        .allow_origin(Any)
+		.allow_headers(Any);
 
     let app = Router::new()
         .route("/ping", get(handlers::ping))
