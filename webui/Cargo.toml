@@ -6,8 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = "0.3.2"
-dioxus-web = "0.3.1"
+# dioxus = "0.3.2"
+dioxus = { git = "https://github.com/DioxusLabs/dioxus" }
+# dioxus-web = "0.3.1"
+dioxus-web = { git = "https://github.com/DioxusLabs/dioxus" }
 log = "0.4.17"
 volcano_parser = { path = "../volcano_parser" }
 wasm-logger = "0.2.0"
