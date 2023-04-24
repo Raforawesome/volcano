@@ -10,7 +10,7 @@ use reqwest_wasm as reqwest;
 
 use std::collections::HashMap;
 
-pub fn get_note_content(title: &str) -> String {
+pub async fn get_note_content(title: &str) -> String {
     if title == "Note 1" {
         FILE1.into()
     } else if title == "Note 2" {
