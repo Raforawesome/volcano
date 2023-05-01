@@ -4,7 +4,7 @@
 
 #![feature(fs_try_exists)]
 mod handlers;
-use axum::{http::Method, routing::get, Router};
+use axum::{routing::get, Router};
 use std::fs;
 use tower_http::cors::{Any, CorsLayer};
 
@@ -19,7 +19,7 @@ async fn main() {
     let cors: CorsLayer = CorsLayer::new()
         .allow_methods(Any)
         .allow_origin(Any)
-		.allow_headers(Any);
+        .allow_headers(Any);
 
     let app = Router::new()
         .route("/ping", get(handlers::ping))
