@@ -34,8 +34,68 @@ impl Display for ParseError {
 
 impl Error for ParseError {}
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+struct Span {
+    start: usize,
+    end: usize,
+}
+
+impl Span {
+    pub fn new(start: usize, end: usize) -> Self {
+        Self { start, end }
+    }
+
+    pub fn len(&self) -> usize {
+        self.end - self.start
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.start == self.end
+    }
+
+    pub fn contains(&self, other: &Self) -> bool {
+        self.start <= other.start && self.end >= other.end
+    }
+
+    pub fn contains_pos(&self, pos: usize) -> bool {
+        self.start <= pos && self.end >= pos
+    }
+
+    pub fn overlaps(&self, other: &Self) -> bool {
+        self.start < other.end && self.end > other.start
+    }
+
+    pub fn overlaps_pos(&self, pos: usize) -> bool {
+        self.start < pos && self.end > pos
+    }
+
+    pub fn merge(&self, other: &Self) -> Self {
+        Self {
+            start: self.start.min(other.start),
+            end: self.end.max(other.end),
+        }
+    }
+
+    pub fn merge_pos(&self, pos: usize) -> Self {
+        Self {
+            start: self.start.min(pos),
+            end: self.end.max(pos),
+        }
+    }
+
+    pub fn get_start(&self) -> usize {
+        self.start
+    }
+
+    pub fn get_end(&self) -> usize {
+        self.end
+    }
+}
+
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum Token {}
+pub enum Token {
+    Newline,
+}
 
 #[derive(Debug, Clone)]
 pub struct TokenStream {
